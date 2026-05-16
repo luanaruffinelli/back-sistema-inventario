@@ -4,12 +4,12 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER');
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
-    "fullName" VARCHAR(255) NOT NULL,
+    "fullname" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "password" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'USER',
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMPTZ(3) NOT NULL,
+    "updatedAT" TIMESTAMPTZ(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
