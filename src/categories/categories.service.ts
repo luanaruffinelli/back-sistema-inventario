@@ -9,7 +9,7 @@ export class CategoriesService {
   
     async create(createCategoryDto: CreateCategoryDto) {
       try {
-        // Validar el correo electrónico
+        // Validar el nombre de la categoría
         const existingCategory = await this.prismaService.category.findFirst({
           where: {
             name: createCategoryDto.name,
@@ -63,7 +63,7 @@ export class CategoriesService {
           throw new NotFoundException('Categoría no encontrada');
         }
   
-        // Validar el correo electrónico
+        // Validar el nombre de la categoría
         const existingCategory = await this.prismaService.category.findFirst({
           where: {
             name: updateCategoryDto.name,
