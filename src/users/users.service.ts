@@ -2,6 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { hashSync } from 'bcrypt';
 
 
 @Injectable()
@@ -22,7 +23,10 @@ export class UsersService {
       }
 
       return await this.prismaService.user.create({
-        data: createUserDto
+        data: {
+          ...createUserDto,
+          password: hashSync(createUserDto.password, 10),
+        }
       })
     } catch (error) {
       console.log(error);
@@ -54,12 +58,17 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
+
+    console.log(user);
+
+    console.log(updateUserDto);
+
+
     try {
       if (!user) {
         throw new NotFoundException('Usuario no encontrado');
       }
 
-      // Validar el correo electrónico
       const existingUser = await this.prismaService.user.findUnique({
         where: {
           email: updateUserDto.email,
@@ -74,7 +83,9 @@ export class UsersService {
         where: {
           id,
         },
-        data: updateUserDto
+        data: {
+          ...updateUserDto,
+        }
       })
     } catch (error) {
       console.log(error);

@@ -26,3 +26,43 @@ model User {
   @@index([email])
   @@map("users")
 }
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  products Product[]
+
+  @@index([id])
+  @@map("categories")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  stock Int @default(0)
+  priceUnit Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  categoryId Int
+  category Categoria @relation(fields: [categoryId], references: [id])
+
+  @@index([id])
+  @@map("products")
+}
+
+model Provider {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([id])
+  @@map("providers")
+}

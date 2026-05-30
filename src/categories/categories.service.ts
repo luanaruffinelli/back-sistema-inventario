@@ -5,12 +5,12 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CategoriesService {
-   constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService) { }
   
     async create(createCategoryDto: CreateCategoryDto) {
       try {
         // Validar el nombre de la categoría
-        const existingCategory = await this.prismaService.category.findFirst({
+        const existingCategory = await this.prismaService.categoria.findFirst({
           where: {
             name: createCategoryDto.name,
           }
