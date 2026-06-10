@@ -1,8 +1,3 @@
-generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-  moduleFormat = "cjs"
-}
 
 datasource db {
   provider = "postgresql"
@@ -11,6 +6,11 @@ datasource db {
 enum Role {
   ADMIN
   USER
+}
+
+enum MovementType {
+  IN
+  OUT
 }
 
 model User {
@@ -22,12 +22,15 @@ model User {
 
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAT DateTime @updatedAt @db.Timestamptz(3)
+  
+   movements Movement[]
+
   @@index([id])
   @@index([email])
   @@map("users")
 }
 
-model Categoria {
+model Category {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
 
@@ -50,7 +53,9 @@ model Product {
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
   categoryId Int
-  category Categoria @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  movements Movement[]
 
   @@index([id])
   @@map("products")
@@ -66,3 +71,28 @@ model Provider {
   @@index([id])
   @@map("providers")
 }
+
+model Movement {
+  id Int @id @default(autoincrement())
+
+  type MovementType @default(IN)
+  date DateTime @default(now()) @db.Timestamptz(3)
+  amount Int @default(0)
+  priceUnit Decimal @db.Decimal(10, 2)
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([id])
+  @@map("movements")
+}
+
+
+/* Ventas */
+/* Compras */
