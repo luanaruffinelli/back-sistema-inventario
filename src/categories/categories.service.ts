@@ -10,7 +10,7 @@ export class CategoriesService {
     async create(createCategoryDto: CreateCategoryDto) {
       try {
         // Validar el nombre de la categoría
-        const existingCategory = await this.prismaService.categoria.findFirst({
+        const existingCategory = await this.prismaService.category.findFirst({
           where: {
             name: createCategoryDto.name,
           }

@@ -34,6 +34,9 @@ export class ProductsService {
       return await this.prismaService.product.findMany({
         orderBy: {
           name: 'asc',
+        },
+        include: {
+          category: true,
         }
       });
     } catch (error) {

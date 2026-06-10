@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateMovementDto } from './dto/create-movement.dto';
+import { CreateMovementDto, MovementType } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { MovementType } from '@generated';
 
 @Injectable()
 export class MovementsService {

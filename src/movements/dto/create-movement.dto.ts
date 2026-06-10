@@ -29,3 +29,5 @@ export class CreateMovementDto {
     @IsNumber()
     userId!: number;
 }
+
+export { MovementType };
